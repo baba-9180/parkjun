@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.parkjun.dao.TestcaseDAO">
+
+  <!-- 문제별 목록 -->
+  <select id="listByProblemDao" parameterType="int" resultType="com.parkjun.dto.TestcaseDTO">
+    SELECT
+      tc_no,
+      p_no,
+      tc_input,
+      tc_output,
+      tc_sample
+    FROM testcase
+    WHERE p_no = #{p_no}
+    ORDER BY tc_no ASC
+  </select>
+
+  <!-- 단건 조회 -->
+  <select id="viewDao" parameterType="int" resultType="com.parkjun.dto.TestcaseDTO">
+    SELECT
+      tc_no,
+      p_no,
+      tc_input,
+      tc_output,
+      tc_sample
+    FROM testcase
+    WHERE tc_no = #{tc_no}
+  </select>
+
+  <!-- 등록 -->
+  <insert id="insertDao" parameterType="com.parkjun.dto.TestcaseDTO">
+    INSERT INTO testcase (
+      tc_no, p_no, tc_input, tc_output, tc_sample
+    ) VALUES (
+      TESTCASE_SEQ.NEXTVAL,
+      #{p_no},
+      #{tc_input},
+      #{tc_output},
+      #{tc_sample}
+    )
+  </insert>
+
+  <!-- 수정 -->
+  <update id="updateDao" parameterType="com.parkjun.dto.TestcaseDTO">
+    UPDATE testcase
+    SET
+      tc_input  = #{tc_input},
+      tc_output = #{tc_output},
+      tc_sample = #{tc_sample}
+    WHERE tc_no = #{tc_no}
+  </update>
+
+  <!-- 삭제 -->
+  <delete id="deleteDao" parameterType="int">
+    DELETE FROM testcase
+    WHERE tc_no = #{tc_no}
+  </delete>
+
+</mapper>

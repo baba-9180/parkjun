@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.parkjun.dao.ProblemDAO">
+
+  <select id="listDao" resultType="com.parkjun.dto.ProblemDTO">
+    SELECT
+      p_no,
+      p_title,
+      p_content,
+      p_level,
+      p_time,
+      p_date
+    FROM problem
+    ORDER BY p_no ASC
+  </select>
+
+  <select id="viewDao" parameterType="int" resultType="com.parkjun.dto.ProblemDTO">
+    SELECT
+      p_no,
+      p_title,
+      p_content,
+      p_level,
+      p_time,
+      p_date
+    FROM problem
+    WHERE p_no = #{p_no}
+  </select>
+
+  <insert id="writeDao" parameterType="com.parkjun.dto.ProblemDTO">
+    INSERT INTO problem (
+      p_no, p_title, p_content, p_level, p_time, p_date
+    ) VALUES (
+      PROBLEM_SEQ.NEXTVAL,
+      #{p_title},
+      #{p_content},
+      #{p_level},
+      #{p_time},
+      SYSDATE
+    )
+  </insert>
+
+  <update id="updateDao" parameterType="com.parkjun.dto.ProblemDTO">
+    UPDATE problem
+    SET
+      p_title = #{p_title},
+      p_content = #{p_content},
+      p_level = #{p_level},
+      p_time = #{p_time}
+    WHERE p_no = #{p_no}
+  </update>
+
+  <delete id="deleteDao" parameterType="int">
+    DELETE FROM problem WHERE p_no = #{p_no}
+  </delete>
+
+</mapper>
